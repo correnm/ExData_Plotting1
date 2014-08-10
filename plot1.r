@@ -8,15 +8,18 @@ plot1<- function(){
     
     ## Subset the data for the designated time period
     plotdata <- read.csv.sql(filename, sep=";", sql = 'select * from file 
-                             where Date = "1/2/2007" or Date ="2/1/2007"
+                             where Date = "1/2/2007" or Date ="2/2/2007"
                              ')
     
-    # Create uneven breaks
+    # save plot to png file
+    png("plot1.png", height=480, width=480)
+    # Create uneven breaks for the x and y-axis
     xbreaks <- c(seq(0,6, by=2))
-    ybreaks <- c(seq(0, 1300, by=200))
+    ybreaks <- c(seq(0, 1200, by=200))
+    # create the histograp
     hist(plotdata$Global_active_power,
          main="Global Active Power",
-         right=FALSE,
+         right=TRUE,
          col="red",
          xlab="Global Active Power (kilowatts)",
          xaxt="n",
@@ -26,8 +29,11 @@ plot1<- function(){
     ## draw the x-axis with user-defined tick-marks
     axis(side=1, at=xbreaks, labels=TRUE)
     ## draw the y-axis with user-defined tick-marks
-    axis(side=2, at=ybreaks, tick=TRUE)
+    axis(side=2, at=ybreaks, labels=TRUE)
     
+
+    # close the device
+    dev.off()
 }
 
 
